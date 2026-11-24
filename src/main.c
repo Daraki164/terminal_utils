@@ -14,7 +14,7 @@ int main(void){
   int iPercent;
 
   vPrintSeparator('=', iWidth);
-  vPrintCentered("RPG STATUS", iWidth);
+  vPrintCentered("RPG STATUS", iWidth, TEXT_COLOR_GREEN, BACKGROUND_COLOR_YELLOW);
   vPrintSeparator('=', iWidth);
   vPrintLine("", 1);
 
@@ -32,14 +32,14 @@ int main(void){
   vPrintSeparator('-', iWidth);
   vPrintLine("Carregando inventario...", 1);
 
-  for (iPercent = 0; iPercent <= 100; iPercent += 1) {
+  for (iPercent = 0; iPercent <= 100; iPercent += 10) {
+    vPrintBar(iPercent, 100, 20);
     vPrintProgress(iPercent);
     if (iPercent < 100)
-      usleep(200000);
+      usleep(500000);
   }
 
   vPrintLine("", 1);
   vPrintLine("Carregamento concluido!", 1);
-
   return 0;
 }

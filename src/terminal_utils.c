@@ -2,6 +2,26 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdarg.h>
+
+void vPrintFormatted(const char *pszText, ...){
+  va_list args;
+  const char *pszAttr;
+
+  if (pszText == NULL)
+    return;
+
+  va_start(args, pszText);
+
+  while ((pszAttr = va_arg(args, const char *)) != ANSI_END) {
+    printf(pszAttr);
+  }
+
+  va_end(args);
+  printf(pszText);
+  printf(ANSI_RESET);
+  
+}
 
 void vPrintProgress(int iPercent){
   char szPercent[4];
@@ -12,25 +32,46 @@ void vPrintProgress(int iPercent){
   snprintf(szPercent, sizeof(szPercent), "%d", iPercent);
 
   printf("%3.3s%%\r", szPercent);
+
   fflush(stdout);
 
 }
 
-void vPrintCentered(const char *pszText, int iWidth){
+void vPrintCentered(const char *pszText, int iWidth, ...){
   int iSpaces;
+  va_list args;
+  const char *pszAttr;
+
+  if (pszText == NULL)
+    return;
+
+  va_start(args, iWidth);
   
   if(iWidth <= 0 || pszText == NULL) return;
+
   if((int)strlen(pszText) >= iWidth){
+    while ((pszAttr = va_arg(args, const char *)) != ANSI_END) {
+    printf(pszAttr);
+    }
+
     printf("%s\n", pszText);
+    va_end(args);
+    printf(ANSI_RESET);
     return;
   }
+
   iSpaces = (iWidth - strlen(pszText)) / 2;
 
   for(; iSpaces > 0; iSpaces--)
     printf(" ");
   
+  while ((pszAttr = va_arg(args, const char *)) != ANSI_END) {
+    printf(pszAttr);
+  }
+  va_end(args);
   vPrintLine(pszText, 1);
-  
+
+  printf(ANSI_RESET);
 }
 
 void vPrintSeparator(char cChar, int iWidth){
@@ -53,20 +94,28 @@ void vPrintBar(int iValue, int iMax, int iWidth){
   if(iValue < 0) iValue = 0;
   if(iValue > iMax) iValue = iMax;
 
-  szBar = calloc(iWidth + 1, sizeof(char));
+  szBar = calloc(iWidth + 3, sizeof(char));
   if(szBar == NULL) return;
  
   dFullBar = ((double)iValue / (double)iMax) * iWidth;    /*deu até fome*/
 
   szBar[ii] = '[';
 
-  for(ii = 1; ii <= iWidth; ii++){
-    if(ii <= dFullBar)
-      szBar[ii] = '#';
-    else
-      szBar[ii] = '-';
-  }
+  for(ii = 1; ii <= iWidth; ii++)
+      szBar[ii] = ' ';
+
   szBar[ii] = ']';
-  printf("%s\n", szBar);
+  
+  for(ii = 0; ii <= iWidth +1; ii++){
+    if(ii <= dFullBar && *(szBar + ii) == ' '){
+      printf(ANSI_RESET);
+      printf(BACKGROUND_COLOR_GREEN);
+      printf("%c", *(szBar + ii));
+    }else{
+      printf(ANSI_RESET);
+      printf("%c", *(szBar + ii));
+    }
+  }
+
   free(szBar);
 }
