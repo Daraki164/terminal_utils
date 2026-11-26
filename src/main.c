@@ -15,7 +15,7 @@ int main(void){
   int iPercent;
 
   vPrintSeparator('=', iWidth);
-  vPrintCentered("RPG STATUS", iWidth);
+  vPrintCentered("RPG STATUS", iWidth, BGCOLOR_WHITE, TCOLOR_BLACK, ITALIC_TEXT);
   vPrintSeparator('=', iWidth);
   vPrintLine("", 1);
 
@@ -42,10 +42,6 @@ int main(void){
 
   vPrintLine("", 1);
   vPrintLine("Carregamento concluido!", 1);
-
-  printf("%d %d\n", bIsTColor(TCOLOR_BLUE),bIsTColor(BGCOLOR_BLACK));
-  printf("%d %d\n", bIsBGColor(TCOLOR_BLUE),bIsBGColor(BGCOLOR_BLACK));
- 
 
   return 0;
 }

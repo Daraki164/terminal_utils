@@ -4,18 +4,18 @@
 #include <string.h>
 #include <stdarg.h>
 
-void vPrintColor(int iColor){
-  printf("%s%d%s", COLOR_PREFIX, iColor, ANSI_LINE_END);
+void vPrintColor(const char *pszColor){
+  printf("%s%s%s", COLOR_PREFIX, pszColor, ANSI_LINE_END);
 }
 
-int bIsBGColor(int iColor){
-  if(iColor < BGCOLOR_BLACK || iColor > BGCOLOR_WHITE) return 0;
+int bIsBGColor(const char *pszColor){
+  if(atoi(pszColor) < atoi(BGCOLOR_BLACK) || atoi(pszColor) > atoi(BGCOLOR_WHITE)) return 0;
   
   return 1;
 }
 
-int bIsTColor (int iColor){
-  if(iColor < TCOLOR_BLACK || iColor > TCOLOR_WHITE) return 0;
+int bIsTColor (const char *pszColor){
+  if(atoi(pszColor) < atoi(TCOLOR_BLACK) || atoi(pszColor) > atoi(TCOLOR_WHITE)) return 0;
   
   return 1;
 }
@@ -29,8 +29,12 @@ void vPrintFormatted(const char *pszText, ...){
 
   va_start(args, pszText);
 
-  while ((pszAttr = va_arg(args, const char *)) != ANSI_END) {
-    printf(pszAttr);
+  while ((pszAttr = va_arg(args, const char *)) != ANSI_END){
+    if(bIsTColor(pszAttr) || bIsBGColor(pszAttr))
+      vPrintColor(pszAttr);
+
+    else
+      printf(pszAttr);
   }
 
   va_end(args);
@@ -67,7 +71,11 @@ void vPrintCentered(const char *pszText, int iWidth, ...){
 
   if((int)strlen(pszText) >= iWidth){
     while ((pszAttr = va_arg(args, const char *)) != ANSI_END) {
-    printf(pszAttr);
+      if(bIsTColor(pszAttr) || bIsBGColor(pszAttr))
+      vPrintColor(pszAttr);
+      
+      else
+        printf(pszAttr);
     }
 
     printf("%s\n", pszText);
@@ -82,7 +90,12 @@ void vPrintCentered(const char *pszText, int iWidth, ...){
     printf(" ");
   
   while ((pszAttr = va_arg(args, const char *)) != ANSI_END) {
-    printf(pszAttr);
+    if(bIsTColor(pszAttr) || bIsBGColor(pszAttr))
+      vPrintColor(pszAttr);
+      
+    else
+      printf(pszAttr);
+    
   }
   va_end(args);
   vPrintLine(pszText, 1);
@@ -99,12 +112,12 @@ void vPrintLine(const char *pszText, int bNewLine){
   bNewLine ? printf("%s\n", pszText) : printf("%s", pszText);
 }
 
-void vPrintBar(int iValue, int iMax, int iWidth, int iColor){
+void vPrintBar(int iValue, int iMax, int iWidth, const char *pszColor){
   double dFullBar;
   char *szBar;
   int ii = 0;
   
-  if(!bIsBGColor(iColor))return;
+  if(!bIsBGColor(pszColor))return;
 
   if(iWidth > 100) iWidth = 100;
   if(iMax <= 0 || iWidth <= 0) return;
@@ -127,7 +140,7 @@ void vPrintBar(int iValue, int iMax, int iWidth, int iColor){
   for(ii = 0; ii <= iWidth +1; ii++){
     printf(ANSI_RESET);
     if(ii <= dFullBar && szBar[ii] == ' ')
-      vPrintColor(iColor);
+      vPrintColor(pszColor);
       
     printf("%c", szBar[ii]);
   }
