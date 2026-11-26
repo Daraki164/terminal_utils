@@ -4,8 +4,36 @@
 #include <string.h>
 #include <stdarg.h>
 
+void vShowCursor(int bShow){
+  if(bShow)
+    printf(CUR_SHOW);
+  else
+    printf(CUR_HIDE);
+}
+
+void vSaveCursor(void){
+  printf(CUR_SAVE);
+}
+
+void vRestoreCursor(void){
+  printf(CUR_RESTORE);
+}
+
+void vClearLine(void){
+  printf(CLEAR_FULL_LINE);
+}
+
+void vClearScreen(void){
+  printf(CLEAR_SCREEN);
+  vGotoXY(1,1);
+}
+
+void vGotoXY(int iX, int iY){
+  printf("%s%d;%d%s", ANSI_PREFIX_INIT, iX, iY, CUR_LINE_END);
+}
+
 void vPrintColor(const char *pszColor){
-  printf("%s%s%s", COLOR_PREFIX, pszColor, ANSI_LINE_END);
+  printf("%s%s%s", ANSI_PREFIX_INIT, pszColor, ANSI_LINE_END);
 }
 
 int bIsBGColor(const char *pszColor){
@@ -40,7 +68,6 @@ void vPrintFormatted(const char *pszText, ...){
   va_end(args);
   printf(pszText);
   printf(ANSI_RESET);
-  
 }
 
 void vPrintProgress(int iPercent){
@@ -54,7 +81,6 @@ void vPrintProgress(int iPercent){
   printf("%3.3s%%\r", szPercent);
 
   fflush(stdout);
-
 }
 
 void vPrintCentered(const char *pszText, int iWidth, ...){
@@ -77,13 +103,11 @@ void vPrintCentered(const char *pszText, int iWidth, ...){
       else
         printf(pszAttr);
     }
-
     printf("%s\n", pszText);
     va_end(args);
     printf(ANSI_RESET);
     return;
   }
-
   iSpaces = (iWidth - strlen(pszText)) / 2;
 
   for(; iSpaces > 0; iSpaces--)
@@ -95,14 +119,12 @@ void vPrintCentered(const char *pszText, int iWidth, ...){
       
     else
       printf(pszAttr);
-    
   }
   va_end(args);
   vPrintLine(pszText, 1);
 
   printf(ANSI_RESET);
 }
-
 void vPrintSeparator(char cChar, int iWidth){
   for(; iWidth >= 0; iWidth--)
     iWidth ? printf("%c", cChar) : printf("\n");
@@ -111,7 +133,6 @@ void vPrintSeparator(char cChar, int iWidth){
 void vPrintLine(const char *pszText, int bNewLine){
   bNewLine ? printf("%s\n", pszText) : printf("%s", pszText);
 }
-
 void vPrintBar(int iValue, int iMax, int iWidth, const char *pszColor){
   double dFullBar;
   char *szBar;

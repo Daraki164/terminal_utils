@@ -4,8 +4,6 @@
   #define ANSI_RESET  "\033[0m"
   #define ANSI_END   ((const char *)0)
 
-  
-
   #define  TCOLOR_BLACK   "30"
   #define  TCOLOR_RED     "31"
   #define  TCOLOR_GREEN   "32"
@@ -24,16 +22,35 @@
   #define  BGCOLOR_CIAN    "46"
   #define  BGCOLOR_WHITE   "47"
 
-  #define COLOR_PREFIX ((const char *)"\033[")
+  #define ANSI_PREFIX_INIT ((const char *)"\033[")
   #define ANSI_LINE_END "m"
+  #define CUR_LINE_END "H"
 
- 
+  #define CUR_CLEAR_SCREEN_FINAL ((const char *)"\033[0J")
+  #define CUR_CLEAR_SCREEN_INIT  ((const char *)"\033[1J")
+  #define CLEAR_SCREEN           ((const char *)"\033[2J")
+  #define CLEAR_FULL_LINE        ((const char *)"\033[2K")
+  #define CUR_CLEAR_LINE_FINAL   ((const char *)"\033[K")
+  #define CUR_SAVE               ((const char *)"\033[s")
+  #define CUR_RESTORE            ((const char *)"\033[u")
+  #define CUR_HIDE               ((const char *)"\033[?25l")
+  #define CUR_SHOW               ((const char *)"\033[?25h")
+  
+
+
   #define BOLD_TEXT      ((const char *)"\033[1m")
   #define DIM_TEXT       ((const char *)"\033[2m")
   #define ITALIC_TEXT    ((const char *)"\033[3m")
   #define UNDERLINE_TEXT ((const char *)"\033[4m")
   #define INVERTION_TEXT ((const char *)"\033[7m")
   #define TAXED_TEXT     ((const char *)"\033[9m")
+
+  void vGotoXY       (int iX, int iY);
+  void vClearScreen  (void);
+  void vClearLine    (void);
+  void vSaveCursor   (void);
+  void vRestoreCursor(void);
+  void vShowCursor   (int bShow);
 
   void vPrintFormatted(const char *pszText, ...);
 

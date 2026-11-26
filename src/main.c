@@ -19,29 +19,33 @@ int main(void){
   vPrintSeparator('=', iWidth);
   vPrintLine("", 1);
 
+
   printf("%-12s %9s\n", "Nome:", pszName);
   printf("%-12s %9d\n", "Nivel:", iLevel);
   printf("%-12s %9d\n", "Ataque:", iAttack);
   printf("%-12s %9d\n", "Defesa:", iDefense);
-
+  
   vPrintLine("", 1);
   printf("HP: %d/%d\n", iHP, iMaxHP);
-  vPrintBar(iHP, iMaxHP, 20, BGCOLOR_GREEN);
+  vPrintBar(iHP, iMaxHP, 20, BGCOLOR_RED);
   vPrintLine("", 1);
   vPrintLine("", 1);
-
+  
   vPrintSeparator('-', iWidth);
   vPrintLine("Carregando inventario...", 1);
+  
+  vShowCursor(0);
 
   for(iPercent = 0; iPercent <= 100; iPercent += 10){
-    vPrintBar(iPercent, 100, 20, BGCOLOR_RED);
+    vPrintBar(iPercent, 100, 20, BGCOLOR_GREEN);
     vPrintProgress(iPercent);
     if (iPercent < 100)
-      usleep(500000);
+    usleep(500000);
   }
+  vShowCursor(1);
 
   vPrintLine("", 1);
   vPrintLine("Carregamento concluido!", 1);
-
+  
   return 0;
 }
