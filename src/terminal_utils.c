@@ -105,17 +105,13 @@ void vPrintBar(int iValue, int iMax, int iWidth){
       szBar[ii] = ' ';
 
   szBar[ii] = ']';
-  
-  for(ii = 0; ii <= iWidth +1; ii++){
-    if(ii <= dFullBar && *(szBar + ii) == ' '){
-      printf(ANSI_RESET);
-      printf(BACKGROUND_COLOR_GREEN);
-      printf("%c", *(szBar + ii));
-    }else{
-      printf(ANSI_RESET);
-      printf("%c", *(szBar + ii));
-    }
-  }
 
+  for(ii = 0; ii <= iWidth +1; ii++){
+    printf(ANSI_RESET);
+    if(ii <= dFullBar && szBar[ii] == ' ')
+      printf(BACKGROUND_COLOR_YELLOW);
+      
+    printf("%c", szBar[ii]);
+  }
   free(szBar);
 }
