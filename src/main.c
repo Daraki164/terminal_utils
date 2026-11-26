@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <terminal_utils.h>
 
+
 int main(void){
 
   const char *pszName = "Guerreiro";
@@ -25,7 +26,7 @@ int main(void){
 
   vPrintLine("", 1);
   printf("HP: %d/%d\n", iHP, iMaxHP);
-  vPrintBar(iHP, iMaxHP, 20);
+  vPrintBar(iHP, iMaxHP, 20, BGCOLOR_GREEN);
   vPrintLine("", 1);
   vPrintLine("", 1);
 
@@ -33,7 +34,7 @@ int main(void){
   vPrintLine("Carregando inventario...", 1);
 
   for(iPercent = 0; iPercent <= 100; iPercent += 10){
-    vPrintBar(iPercent, 100, 20);
+    vPrintBar(iPercent, 100, 20, BGCOLOR_RED);
     vPrintProgress(iPercent);
     if (iPercent < 100)
       usleep(500000);
@@ -41,5 +42,10 @@ int main(void){
 
   vPrintLine("", 1);
   vPrintLine("Carregamento concluido!", 1);
+
+  printf("%d %d\n", bIsTColor(TCOLOR_BLUE),bIsTColor(BGCOLOR_BLACK));
+  printf("%d %d\n", bIsBGColor(TCOLOR_BLUE),bIsBGColor(BGCOLOR_BLACK));
+ 
+
   return 0;
 }

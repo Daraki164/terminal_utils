@@ -4,6 +4,22 @@
 #include <string.h>
 #include <stdarg.h>
 
+void vPrintColor(int iColor){
+  printf("%s%d%s", COLOR_PREFIX, iColor, ANSI_LINE_END);
+}
+
+int bIsBGColor(int iColor){
+  if(iColor < BGCOLOR_BLACK || iColor > BGCOLOR_WHITE) return 0;
+  
+  return 1;
+}
+
+int bIsTColor (int iColor){
+  if(iColor < TCOLOR_BLACK || iColor > TCOLOR_WHITE) return 0;
+  
+  return 1;
+}
+
 void vPrintFormatted(const char *pszText, ...){
   va_list args;
   const char *pszAttr;
@@ -83,11 +99,13 @@ void vPrintLine(const char *pszText, int bNewLine){
   bNewLine ? printf("%s\n", pszText) : printf("%s", pszText);
 }
 
-void vPrintBar(int iValue, int iMax, int iWidth){
+void vPrintBar(int iValue, int iMax, int iWidth, int iColor){
   double dFullBar;
   char *szBar;
   int ii = 0;
   
+  if(!bIsBGColor(iColor))return;
+
   if(iWidth > 100) iWidth = 100;
   if(iMax <= 0 || iWidth <= 0) return;
 
@@ -109,7 +127,7 @@ void vPrintBar(int iValue, int iMax, int iWidth){
   for(ii = 0; ii <= iWidth +1; ii++){
     printf(ANSI_RESET);
     if(ii <= dFullBar && szBar[ii] == ' ')
-      printf(BACKGROUND_COLOR_YELLOW);
+      vPrintColor(iColor);
       
     printf("%c", szBar[ii]);
   }
