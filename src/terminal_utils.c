@@ -4,6 +4,35 @@
 #include <string.h>
 #include <stdarg.h>
 
+void vUpdateHP(int iHP, int iMaxHP){
+  if(iHP < 0) iHP = 0;
+  if(iMaxHP < 0) iMaxHP = 0;
+  if(iHP > iMaxHP) iHP = iMaxHP;
+
+  printf("HP: %d/%d\n", iHP, iMaxHP);
+    vPrintBar(iHP, iMaxHP, 20, BGCOLOR_RED);
+}
+
+void vUpdateStatus(const char *pszStatus){
+  vClearLine();
+  printf("STATUS: %s", pszStatus);
+}
+
+void vDrawInterface(void){
+  vPrintSeparator('=', 32);
+  vPrintCentered("RPG STATUS", 32, BGCOLOR_WHITE, TCOLOR_BLACK, ITALIC_TEXT);
+  vPrintSeparator('=', 32);
+  vPrintLine("", 1);
+
+
+  printf("%-12s %9s\n", "Nome:", "Guerreiro");
+  printf("%-12s %9d\n", "Nivel:", 5);
+  printf("%-12s %9d\n", "Ataque:", 25);
+  printf("%-12s %9d\n", "Defesa:", 12);
+  
+  vPrintLine("", 1);
+}
+
 void vShowCursor(int bShow){
   if(bShow)
     printf(CUR_SHOW);

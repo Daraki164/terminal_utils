@@ -9,11 +9,11 @@ int main(void){
   int iLevel = 5;
   int iAttack = 25;
   int iDefense = 12;
-  int iHP = 75;
+  int iHP = 100;
   int iMaxHP = 100;
   int iWidth = 32;
   int iPercent;
-
+  
   vPrintSeparator('=', iWidth);
   vPrintCentered("RPG STATUS", iWidth, BGCOLOR_WHITE, TCOLOR_BLACK, ITALIC_TEXT);
   vPrintSeparator('=', iWidth);
@@ -25,13 +25,47 @@ int main(void){
   printf("%-12s %9d\n", "Ataque:", iAttack);
   printf("%-12s %9d\n", "Defesa:", iDefense);
   
-  vPrintLine("", 1);
-  printf("HP: %d/%d\n", iHP, iMaxHP);
-  vPrintBar(iHP, iMaxHP, 20, BGCOLOR_RED);
-  vPrintLine("", 1);
-  vPrintLine("", 1);
-  
   vPrintSeparator('-', iWidth);
+  
+  vPrintLine("", 1);
+  vShowCursor(0);
+  do{
+    vSaveCursor();
+    vClearLine();
+
+    vUpdateHP(iHP, iMaxHP);
+    
+    //variavel = cor(iHP, iMaxHP)
+    //vPrintBar(iHP, iMaxHP, 20, variavel);
+
+    vPrintLine("", 1);
+    vPrintLine("", 1);
+    vPrintSeparator('-', iWidth);
+  
+    if(iHP == 100){
+      vUpdateStatus("Pronto");
+      iHP-=25;
+    }else if(iHP == 75){
+      vUpdateStatus("Dano recebido");
+      iHP-=25;
+    }else if(iHP == 50){
+      vUpdateStatus("Em perigo");
+      iHP += 40;
+    }else if(iHP == 90){
+      iHP += 1;
+      vUpdateStatus("Curado");
+    }
+
+    vPrintLine("", 1);
+    vPrintSeparator('=', iWidth);
+    usleep(1000000);
+    
+    if(iHP <= 90)
+      vRestoreCursor();
+
+  }while(iHP <= 90);
+  vShowCursor(1);
+
   vPrintLine("Carregando inventario...", 1);
   
   vShowCursor(0);
@@ -40,7 +74,7 @@ int main(void){
     vPrintBar(iPercent, 100, 20, BGCOLOR_GREEN);
     vPrintProgress(iPercent);
     if (iPercent < 100)
-    usleep(500000);
+    usleep(200000);
   }
   vShowCursor(1);
 

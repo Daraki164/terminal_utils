@@ -35,8 +35,6 @@
   #define CUR_RESTORE            ((const char *)"\033[u")
   #define CUR_HIDE               ((const char *)"\033[?25l")
   #define CUR_SHOW               ((const char *)"\033[?25h")
-  
-
 
   #define BOLD_TEXT      ((const char *)"\033[1m")
   #define DIM_TEXT       ((const char *)"\033[2m")
@@ -44,6 +42,13 @@
   #define UNDERLINE_TEXT ((const char *)"\033[4m")
   #define INVERTION_TEXT ((const char *)"\033[7m")
   #define TAXED_TEXT     ((const char *)"\033[9m")
+
+  #define BOX_HORIZONTAL   "─"
+  #define BOX_VERTICAL     "│"
+  #define BOX_TOP_LEFT     "╭"
+  #define BOX_TOP_RIGHT    "╮"
+  #define BOX_BOTTOM_LEFT  "╰"
+  #define BOX_BOTTOM_RIGHT "╯"
 
   void vGotoXY       (int iX, int iY);
   void vClearScreen  (void);
@@ -60,6 +65,13 @@
   void vPrintProgress (int iPercent);
   void vPrintBar      (int iValue, int iMax, int iWidth, const char *pszColor);
   void vPrintColor    (const char *pszColor);
+
+  void vDrawInterface(void);
+  void vUpdateHP     (int iHP, int iMaxHP);
+  void vUpdateStatus (const char *pszStatus);
+
+  void vDrawHLine(int iX, int iY, int iWidth);
+  void vDrawVLine(int iX, int iY, int iHeight); 
   
   int bIsTColor (const char *pszColor);
   int bIsBGColor(const char *pszColor);
