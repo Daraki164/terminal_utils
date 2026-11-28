@@ -50,6 +50,10 @@
   #define BOX_BOTTOM_LEFT  "╰"
   #define BOX_BOTTOM_RIGHT "╯"
 
+  #define TITLE_BOX_INITX 1 
+  #define TITLE_BOX_INITY 1
+  
+
   void vGotoXY       (int iX, int iY);
   void vClearScreen  (void);
   void vClearLine    (void);
@@ -72,6 +76,7 @@
 
   void vDrawHLine(int iX, int iY, int iWidth);
   void vDrawVLine(int iX, int iY, int iHeight); 
+  void vDrawBox  (int iX, int iY, int iWidth, int iHeight);
   
   int bIsTColor (const char *pszColor);
   int bIsBGColor(const char *pszColor);

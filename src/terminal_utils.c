@@ -4,6 +4,41 @@
 #include <string.h>
 #include <stdarg.h>
 
+
+void vDrawBox(int iX, int iY, int iWidth, int iHeight){
+  vGotoXY(iX, iY);
+  printf(BOX_TOP_LEFT);
+
+  vDrawHLine(iX, iY + 1, iWidth - 2);
+  printf(BOX_TOP_RIGHT);
+
+  vDrawVLine(iX + 1, iY, iHeight);
+  vDrawVLine(iX + 1, iY + iWidth - 1, iHeight);
+
+  vGotoXY(iX + iHeight + 1, iY);
+  printf(BOX_BOTTOM_LEFT);
+
+  vDrawHLine(iX + iHeight + 1, iY + 1, iWidth - 2);
+  printf(BOX_BOTTOM_RIGHT);
+}
+
+void vDrawVLine(int iX, int iY, int iHeight){
+  int ii;
+
+  for(ii = 0; ii < iHeight; ii++){
+    vGotoXY(iX + ii, iY);
+    printf("%s", BOX_VERTICAL);
+  }
+}
+
+void vDrawHLine(int iX, int iY, int iWidth){
+  int ii;
+
+  vGotoXY(iX, iY);
+  for(ii = 0; ii < iWidth; ii++)
+    printf("%s", BOX_HORIZONTAL);
+}
+
 void vUpdateHP(int iHP, int iMaxHP){
   if(iHP < 0) iHP = 0;
   if(iMaxHP < 0) iMaxHP = 0;
