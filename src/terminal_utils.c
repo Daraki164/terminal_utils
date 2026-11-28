@@ -58,17 +58,20 @@ void vDrawHLine(int iX, int iY, int iWidth){
     printf("%s", BOX_HORIZONTAL);
 }
 
-void vUpdateHP(int iHP, int iMaxHP){
+void vUpdateHP(int iHP, int iMaxHP, int iX, int iY){
   if(iHP < 0) iHP = 0;
   if(iMaxHP < 0) iMaxHP = 0;
   if(iHP > iMaxHP) iHP = iMaxHP;
 
+  vGotoXY(iX, iY);
   printf("HP: %d/%d\n", iHP, iMaxHP);
-    vPrintBar(iHP, iMaxHP, 20, BGCOLOR_RED);
+
+  vGotoXY(iX + 1, iY);
+  vPrintBar(iHP, iMaxHP, 20, BGCOLOR_RED);
 }
 
 void vUpdateStatus(const char *pszStatus){
-  vClearLine();
+  printf(CUR_CLEAR_LINE_FINAL);
   printf("STATUS: %s", pszStatus);
 }
 

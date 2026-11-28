@@ -52,7 +52,9 @@
 
   #define TITLE_BOX_INITX 1 
   #define FIRST_COL 1
-  #define STATUS_BOX_INITY TITLE_BOX_INITX + 3
+  #define STATUS_BOX_INITX TITLE_BOX_INITX + 3
+  #define HP_BOX_INITX STATUS_BOX_INITX
+  #define HP_BOX_COL FIRST_COL + 26
 
   
 
@@ -73,7 +75,7 @@
   void vPrintColor    (const char *pszColor);
 
   void vDrawInterface(void);
-  void vUpdateHP     (int iHP, int iMaxHP);
+  void vUpdateHP     (int iHP, int iMaxHP, int iX, int iY);
   void vUpdateStatus (const char *pszStatus);
 
   void vDrawHLine(int iX, int iY, int iWidth);

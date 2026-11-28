@@ -24,57 +24,66 @@ int main(void){
   vRestoreCursor();
   vPrintLine("", 1);
 
-  vDrawBox(STATUS_BOX_INITY, FIRST_COL, 24, 4);
+  vDrawBox(STATUS_BOX_INITX, FIRST_COL, 24, 4);
   vPrintLine("", 1);
   vSaveCursor();
 
-  vGotoXY(STATUS_BOX_INITY + 1, FIRST_COL + 1);
+  vGotoXY(STATUS_BOX_INITX + 1, FIRST_COL + 1);
   printf("%-12s %9s\n", "Nome:", pszName);
   
-  vGotoXY(STATUS_BOX_INITY + 2, FIRST_COL + 1);
+  vGotoXY(STATUS_BOX_INITX + 2, FIRST_COL + 1);
   printf("%-12s %9d\n", "Nivel:", iLevel);
   
-  vGotoXY(STATUS_BOX_INITY + 3, FIRST_COL + 1);
+  vGotoXY(STATUS_BOX_INITX + 3, FIRST_COL + 1);
   printf("%-12s %9d\n", "Ataque:", iAttack);
   
-  vGotoXY(STATUS_BOX_INITY + 4, FIRST_COL + 1);
+  vGotoXY(STATUS_BOX_INITX + 4, FIRST_COL + 1);
   printf("%-12s %9d\n", "Defesa:", iDefense);
 
   vRestoreCursor();
-  
-  vPrintSeparator('-', iWidth);
-  
+   
   vPrintLine("", 1);
   vShowCursor(0);
+  
   do{
     vSaveCursor();
-    vClearLine();
 
-    vUpdateHP(iHP, iMaxHP);
+    vGotoXY(HP_BOX_INITX + 1, HP_BOX_COL + 1);
+    printf(CUR_CLEAR_LINE_FINAL);
+    
+    vUpdateHP(iHP, iMaxHP, HP_BOX_INITX + 1, HP_BOX_COL + 1);
+    vDrawBox(HP_BOX_INITX, HP_BOX_COL, 26, 2);
     
     //variavel = cor(iHP, iMaxHP)
     //vPrintBar(iHP, iMaxHP, 20, variavel);
 
     vPrintLine("", 1);
     vPrintLine("", 1);
-    vPrintSeparator('-', iWidth);
+    vPrintLine("", 1);
   
     if(iHP == 100){
+      vGotoXY(HP_BOX_INITX + 5, HP_BOX_COL + 1);
       vUpdateStatus("Pronto");
+      vDrawBox(HP_BOX_INITX + 4, HP_BOX_COL, 26, 1);
       iHP-=25;
     }else if(iHP == 75){
+      vGotoXY(HP_BOX_INITX + 5, HP_BOX_COL + 1);
       vUpdateStatus("Dano recebido");
+      vDrawBox(HP_BOX_INITX + 4, HP_BOX_COL, 26, 1);
       iHP-=25;
     }else if(iHP == 50){
+      vGotoXY(HP_BOX_INITX + 5, HP_BOX_COL + 1);
       vUpdateStatus("Em perigo");
+      vDrawBox(HP_BOX_INITX + 4, HP_BOX_COL, 26, 1);
       iHP += 40;
     }else if(iHP == 90){
+      vGotoXY(HP_BOX_INITX + 5, HP_BOX_COL + 1);
       iHP += 1;
       vUpdateStatus("Curado");
+      vDrawBox(HP_BOX_INITX + 4, HP_BOX_COL, 26, 1);
     }
 
     vPrintLine("", 1);
-    vPrintSeparator('=', iWidth);
     usleep(1000000);
     
     if(iHP <= 90)
