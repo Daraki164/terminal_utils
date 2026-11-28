@@ -1,5 +1,6 @@
 CC = gcc
 CFLAGS = -D_DEFAULT_SOURCE -Wall -Wextra -pedantic
+DEBUG_FLAGS = -Wall -Wextra -g -O0 
 
 INC_DIR = include
 SRC_DIR = src
@@ -13,6 +14,8 @@ OBJS = \
 			$(OBJ_DIR)/terminal_utils.o \
 			$(OBJ_DIR)/main.o
 
+debug: CFLAGS = $(DEBUG_FLAGS)
+debug: all
 
 all: clean diretorio $(BIN_DIR)/main
 

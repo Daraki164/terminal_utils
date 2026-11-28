@@ -4,6 +4,25 @@
 #include <string.h>
 #include <stdarg.h>
 
+void vFillRect(int iX, int iY, int iWidth, int iHeight, const char *pszColor){
+  int iRow, iCol;
+
+  if(iX < 1) iX = 1;
+  if(iY < 1) iY = 1;
+  if(iWidth < 1) iWidth = 1;
+  if(iHeight < 1) iHeight = 1;
+
+  if(pszColor == NULL) return;
+  if(!bIsBGColor(pszColor)) return;
+
+  vPrintColor(pszColor);
+  for(iRow = 0; iRow < iHeight; iRow++)
+    for(iCol = 0; iCol < iWidth; iCol++){
+      vGotoXY(iX + iRow, iY + iCol);
+      printf("%c", ' ');
+    }
+  printf(ANSI_RESET);
+}
 
 void vDrawBox(int iX, int iY, int iWidth, int iHeight){
   vGotoXY(iX, iY);
@@ -148,47 +167,38 @@ void vPrintProgress(int iPercent){
 }
 
 void vPrintCentered(const char *pszText, int iWidth, ...){
-  int iSpaces;
+  int iSpaces; 
+  int iLen;
+  int ii;
+
   va_list args;
+  
   const char *pszAttr;
 
-  if (pszText == NULL)
-    return;
-
-  va_start(args, iWidth);
-  
   if(iWidth <= 0 || pszText == NULL) return;
 
-  if((int)strlen(pszText) >= iWidth){
-    while ((pszAttr = va_arg(args, const char *)) != ANSI_END) {
-      if(bIsTColor(pszAttr) || bIsBGColor(pszAttr))
-      vPrintColor(pszAttr);
-      
-      else
-        printf(pszAttr);
-    }
-    printf("%s\n", pszText);
-    va_end(args);
-    printf(ANSI_RESET);
-    return;
-  }
-  iSpaces = (iWidth - strlen(pszText)) / 2;
-
-  for(; iSpaces > 0; iSpaces--)
-    printf(" ");
+  iLen = (int)strlen(pszText);
+  iSpaces = (iWidth - iLen) / 2;
+  if(iSpaces < 0) iSpaces = 0;
   
+  va_start(args, iWidth);
   while ((pszAttr = va_arg(args, const char *)) != ANSI_END) {
     if(bIsTColor(pszAttr) || bIsBGColor(pszAttr))
       vPrintColor(pszAttr);
-      
     else
       printf(pszAttr);
   }
   va_end(args);
-  vPrintLine(pszText, 1);
+
+  for (ii = 0; ii < iSpaces; ii++) putchar(' ');     
+    printf("%s", pszText);
+
+  for (ii = 0; ii < iWidth - iLen - iSpaces; ii++)
+    putchar(' ');
 
   printf(ANSI_RESET);
 }
+
 void vPrintSeparator(char cChar, int iWidth){
   for(; iWidth >= 0; iWidth--)
     iWidth ? printf("%c", cChar) : printf("\n");

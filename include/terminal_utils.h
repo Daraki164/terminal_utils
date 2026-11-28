@@ -77,6 +77,7 @@
   void vDrawHLine(int iX, int iY, int iWidth);
   void vDrawVLine(int iX, int iY, int iHeight); 
   void vDrawBox  (int iX, int iY, int iWidth, int iHeight);
+  void vFillRect (int iX, int iY, int iWidth, int iHeight, const char *pszColor);
   
   int bIsTColor (const char *pszColor);
   int bIsBGColor(const char *pszColor);

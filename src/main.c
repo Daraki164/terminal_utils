@@ -14,13 +14,13 @@ int main(void){
   int iWidth = 32;
   int iPercent;
   
-  vDrawBox(TITLE_BOX_INITX, TITLE_BOX_INITY, 40, 1);
- 
+  vDrawBox(TITLE_BOX_INITX, TITLE_BOX_INITY, 40, 3);
+  vFillRect(2, 2, 38, 3, BGCOLOR_RED);
   vPrintLine("", 1);
   vSaveCursor();
-  vGotoXY(2, 2);
+  vGotoXY(3, 2);
   
-  vPrintCentered("RPG STATUS", 38, BGCOLOR_WHITE, TCOLOR_BLACK, ITALIC_TEXT, ANSI_END);
+  vPrintCentered("RPG STATUS", 38, BGCOLOR_RED, TCOLOR_GREEN, ITALIC_TEXT, ANSI_END);
   vRestoreCursor();
   vPrintLine("", 1);
 
