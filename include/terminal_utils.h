@@ -51,7 +51,9 @@
   #define BOX_BOTTOM_RIGHT "╯"
 
   #define TITLE_BOX_INITX 1 
-  #define TITLE_BOX_INITY 1
+  #define FIRST_COL 1
+  #define STATUS_BOX_INITY TITLE_BOX_INITX + 3
+
   
 
   void vGotoXY       (int iX, int iY);

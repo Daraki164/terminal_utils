@@ -14,21 +14,33 @@ int main(void){
   int iWidth = 32;
   int iPercent;
   
-  vDrawBox(TITLE_BOX_INITX, TITLE_BOX_INITY, 40, 3);
-  vFillRect(2, 2, 38, 3, BGCOLOR_RED);
+  vDrawBox(TITLE_BOX_INITX, FIRST_COL, 40, 1);
+  
   vPrintLine("", 1);
   vSaveCursor();
-  vGotoXY(3, 2);
+  vGotoXY(2, 2);
   
   vPrintCentered("RPG STATUS", 38, BGCOLOR_RED, TCOLOR_GREEN, ITALIC_TEXT, ANSI_END);
   vRestoreCursor();
   vPrintLine("", 1);
 
+  vDrawBox(STATUS_BOX_INITY, FIRST_COL, 24, 4);
+  vPrintLine("", 1);
+  vSaveCursor();
 
+  vGotoXY(STATUS_BOX_INITY + 1, FIRST_COL + 1);
   printf("%-12s %9s\n", "Nome:", pszName);
+  
+  vGotoXY(STATUS_BOX_INITY + 2, FIRST_COL + 1);
   printf("%-12s %9d\n", "Nivel:", iLevel);
+  
+  vGotoXY(STATUS_BOX_INITY + 3, FIRST_COL + 1);
   printf("%-12s %9d\n", "Ataque:", iAttack);
+  
+  vGotoXY(STATUS_BOX_INITY + 4, FIRST_COL + 1);
   printf("%-12s %9d\n", "Defesa:", iDefense);
+
+  vRestoreCursor();
   
   vPrintSeparator('-', iWidth);
   
